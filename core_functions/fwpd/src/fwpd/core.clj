@@ -39,6 +39,16 @@
 (defn map-with-reduce [f data]
   (reduce #(conj %1 (f %2)) [] data))
 
+(defn filtra [f data res]
+  (if (f data)
+    (conj res data)
+    res))
+
+(defn filter-with-reduce [f data]
+  (reduce #(filtra f %2 %1) [] data))
+
+(defn some-with-reduce [f data]
+  (not (empty? (filter-with-reduce f data))))
 
 ;; Question 2
 (println (into '() (glitter-filter 3 (mapify (parse (slurp filename))))))
